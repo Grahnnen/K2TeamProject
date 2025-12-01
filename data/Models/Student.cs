@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace SchoolClient.Models
+namespace K2TeamProject.Models
 {
     public class Student
     {
