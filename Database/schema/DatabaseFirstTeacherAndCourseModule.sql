@@ -1,0 +1,12 @@
+CREATE TABLE Teacher(
+	TeacherID INT PRIMARY KEY NOT NULL,
+	TeacherName NVARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Course(
+	CourseID INT PRIMARY KEY NOT NULL,
+	CourseName NVARCHAR(50) NOT NULL,
+	Fk_TeacherID INT FOREIGN KEY REFERENCES Teacher(TeacherID),
+	CourseStartDate DATE,
+	CourseEndDate DATE,
+);
