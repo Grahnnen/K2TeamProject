@@ -8,6 +8,7 @@ namespace K2TeamProject.Models
         public int StudentID { get; set; }
         [Required]
         [MaxLength(150)]
-        public string StudentName { get; set; }
+        public string StudentFirstName { get; set; }
+        public string StudentLastName { get; set;
     }
 }
