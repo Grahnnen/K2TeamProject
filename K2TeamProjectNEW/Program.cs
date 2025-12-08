@@ -16,9 +16,6 @@ namespace K2TeamProjectNEW
 
 			using var context = new K2TeamProjectDbContext(options);
 
-			var products = context.Teachers.Where(p => p.Price < 500).ToList();
-
-			Console.WriteLine(products.Count);
 		}
     }
 }

@@ -24,5 +24,6 @@ namespace K2TeamProjectNEW.Models
 		public int Fk_ClassroomID { get; set; }
 		[ForeignKey("Fk_ClassroomID")]
 		public Classroom Classroom { get; set; }
+
 	}
 }

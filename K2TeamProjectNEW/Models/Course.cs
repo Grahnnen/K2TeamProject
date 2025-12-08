@@ -16,4 +16,5 @@ public partial class Course
     public DateOnly? CourseEndDate { get; set; }
 
     public virtual Teacher? FkTeacher { get; set; }
+
 }

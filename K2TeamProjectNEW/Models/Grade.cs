@@ -22,6 +22,7 @@ namespace K2TeamProjectNEW.Models
 		[ForeignKey("Fk_StudentID")]
 		public Student Student { get; set; }
 
+
 		public int Fk_TeacherID { get; set; }
 		[ForeignKey("Fk_TeacherID")]
 		public Teacher Teacher { get; set; }

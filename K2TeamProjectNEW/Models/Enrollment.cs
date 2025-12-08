@@ -28,5 +28,6 @@ namespace K2TeamProjectNEW.Models
 		public int Fk_GradeID { get; set; }
 		[ForeignKey("Fk_GradeID")]
 		public Grade Grade { get; set; }
+
 	}
 }

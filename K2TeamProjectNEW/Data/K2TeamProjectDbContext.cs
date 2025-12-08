@@ -26,6 +26,7 @@ public partial class K2TeamProjectDbContext : DbContext
 	public DbSet<Student> Students { get; set; }
 
 
+
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	=> optionsBuilder.UseSqlServer("Server=localhost;Database=K2SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;");
 
