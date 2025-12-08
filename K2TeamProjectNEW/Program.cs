@@ -16,6 +16,7 @@ namespace K2TeamProjectNEW
 
 			using var context = new K2TeamProjectDbContext(options);
 
+
 		}
     }
 }
