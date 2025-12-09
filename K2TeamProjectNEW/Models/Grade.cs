@@ -18,13 +18,13 @@ namespace K2TeamProjectNEW.Models
 		public string GradeScale { get; set; }
 
 		//Foreign Keys
-		public int Fk_StudentID { get; set; }
-		[ForeignKey("Fk_StudentID")]
+		public int FkStudentID { get; set; }
+		[ForeignKey("FkStudentID")]
 		public Student Student { get; set; }
 
 
-		public int Fk_TeacherID { get; set; }
-		[ForeignKey("Fk_TeacherID")]
+		public int FkTeacherID { get; set; }
+		[ForeignKey("FkTeacherID")]
 		public Teacher Teacher { get; set; }
 	}
 }

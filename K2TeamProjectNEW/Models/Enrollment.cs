@@ -17,16 +17,16 @@ namespace K2TeamProjectNEW.Models
 		public DateOnly RegistrationDate { get; set; }
 
 		//Foreign Keys
-		public int Fk_StudentID { get; set; }
-		[ForeignKey("Fk_StudentID")]
+		public int FkStudentID { get; set; }
+		[ForeignKey("FkStudentID")]
 		public Student Student { get; set; }
 
-		public int Fk_CourseID { get; set; }
-		[ForeignKey("Fk_CourseID")]
+		public int FkCourseID { get; set; }
+		[ForeignKey("FkCourseID")]
 		public Course Course { get; set; }
 
-		public int Fk_GradeID { get; set; }
-		[ForeignKey("Fk_GradeID")]
+		public int FkGradeID { get; set; }
+		[ForeignKey("FkGradeID")]
 		public Grade Grade { get; set; }
 
 	}

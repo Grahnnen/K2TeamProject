@@ -18,11 +18,11 @@ namespace K2TeamProjectNEW.Models
 		public DateTime SchedulingEndDateTime { get; set; }
 
 		//Foreign Keys
-		public int Fk_CourseID { get; set; }
-		[ForeignKey("Fk_CourseID")]
+		public int FkCourseID { get; set; }
+		[ForeignKey("FkCourseID")]
 		public Course Course { get; set; }
-		public int Fk_ClassroomID { get; set; }
-		[ForeignKey("Fk_ClassroomID")]
+		public int FkClassroomID { get; set; }
+		[ForeignKey("FkClassroomID")]
 		public Classroom Classroom { get; set; }
 
 	}
