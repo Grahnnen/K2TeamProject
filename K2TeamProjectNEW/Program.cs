@@ -1,4 +1,5 @@
 ﻿using K2TeamProjectNEW.Data;
+using K2TeamProjectNEW.UI.MainMenuUI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -12,11 +13,17 @@ namespace K2TeamProjectNEW
 
 			var connectionString = builder.GetConnectionString("DefaultConnection");
 
-			var options = new DbContextOptionsBuilder<K2TeamProjectDbContext>().UseSqlServer(connectionString).Options;
+			var options = new DbContextOptionsBuilder<DatabaseFirstContext>().UseSqlServer(connectionString).Options;
 
-			using var context = new K2TeamProjectDbContext(options);
+			using var context = new DatabaseFirstContext(options);
 
+            var codeFirst = new CodeFirstContext();
 
-		}
+            var databaseFirst = new DatabaseFirstContext();
+
+            var data = new DataService(codeFirst, databaseFirst);
+
+            MainMenu.Show(data);
+        }
     }
 }

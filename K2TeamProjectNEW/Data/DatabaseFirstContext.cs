@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace K2TeamProjectNEW.Data;
 
-public partial class K2TeamProjectDbContext : DbContext
+public partial class DatabaseFirstContext : DbContext
 {
-    public K2TeamProjectDbContext()
+    public DatabaseFirstContext()
     {
     }
 
-    public K2TeamProjectDbContext(DbContextOptions<K2TeamProjectDbContext> options)
+    public DatabaseFirstContext(DbContextOptions<DatabaseFirstContext> options)
         : base(options)
     {
     }
@@ -21,8 +21,10 @@ public partial class K2TeamProjectDbContext : DbContext
     public virtual DbSet<Teacher> Teachers { get; set; }
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	=> optionsBuilder.UseSqlServer("Server=localhost;Database=K2SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;");
+	{
 
+	}
+	
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		modelBuilder.Entity<Course>(entity =>

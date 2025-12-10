@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace K2TeamProjectNEW.Migrations.K2TeamProjectCodeFirstDb
 {
-    [DbContext(typeof(K2TeamProjectCodeFirstDbContext))]
+    [DbContext(typeof(CodeFirstContext))]
     partial class K2TeamProjectCodeFirstDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
