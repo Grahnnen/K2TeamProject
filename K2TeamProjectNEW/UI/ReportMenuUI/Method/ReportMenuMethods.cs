@@ -66,5 +66,74 @@ namespace K2TeamProjectNEW.UI.ReportMenuUI.Method
 
 			Console.ReadKey();
 		}
+
+		public static void ShowActiveCourses(DataService data)
+		{
+			var today = DateOnly.FromDateTime(DateTime.Today);
+
+			// Courses active today
+			var activeCourses = data.DatabaseFirst.Set<Course>()
+				.Where(c => c.CourseStartDate <= today && today <= c.CourseEndDate)
+				.OrderBy(c => c.CourseStartDate)
+				.ToList();
+
+			// Enrollments for those courses (may be empty if no students)
+			var activeEnrollments = data.CodeFirst.Set<Enrollment>()
+				.Include(e => e.Student)
+				.Include(e => e.Course)
+				.Where(e => e.Course != null &&
+							e.Course.CourseStartDate <= today &&
+							today <= e.Course.CourseEndDate)
+				.ToList();
+
+			// Upcoming courses
+			var upcomingCourses = data.DatabaseFirst.Set<Course>()
+				.Where(c => c.CourseStartDate > today)
+				.OrderBy(c => c.CourseStartDate)
+				.ToList();
+
+			Console.Clear();
+
+			if (activeCourses.Count == 0)
+			{
+				Console.WriteLine("Inga aktiva kurser just nu.");
+				Console.WriteLine("Nästkommande kurser: ");
+				foreach (var course in upcomingCourses)
+				{
+					Console.WriteLine($"{course.CourseName} Börjar: {course.CourseStartDate:yyyy-MM-dd}");
+				}
+				
+				Console.ReadKey();
+				return;
+			}
+
+			Console.WriteLine("Aktiva kurser:");
+			foreach (var course in activeCourses)
+			{
+				Console.WriteLine($"- {course.CourseName} ({course.CourseStartDate:yyyy-MM-dd} -> {course.CourseEndDate:yyyy-MM-dd})");
+
+				var studentsInCourse = activeEnrollments
+					.Where(e => e.Course!.CourseID == course.CourseID)
+					.Select(e => e.Student!)
+					.OrderBy(s => s.StudentLastName)
+					.ThenBy(s => s.StudentFirstName)
+					.ToList();
+
+				if (studentsInCourse.Count == 0)
+				{
+					Console.WriteLine("  Inga studenter inskrivna.");
+				}
+				else
+				{
+					Console.WriteLine("  Inskrivna studenter:");
+					foreach (var s in studentsInCourse)
+					{
+						Console.WriteLine($"    - {s.StudentFirstName} {s.StudentLastName} (ID: {s.StudentID})");
+					}
+				}
+			}
+
+			Console.ReadKey();
+		}
 	}
 }

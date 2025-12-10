@@ -32,7 +32,7 @@ namespace K2TeamProjectNEW.UI.ReportMenuUI
                     switch (menuChoiceReportMenu)
                     {
                         case "1": ReportMenuMethods.ShowStudentOverview(data); break;
-                        case "2": //ShowActiveCourses(data); break;
+                        case "2": ReportMenuMethods.ShowActiveCourses(data); break;
                         case "3": //ShowGradeStatistics(data); break;
                         case "4": return;
                         default:
