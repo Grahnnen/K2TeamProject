@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using K2TeamProjectNEW.Models;
+﻿using K2TeamProjectNEW.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 
 namespace K2TeamProjectNEW.Data;
 
@@ -22,7 +23,24 @@ public partial class DatabaseFirstContext : DbContext
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
+		if (!optionsBuilder.IsConfigured)
+		{
+			// Try to read connection string from appsettings.json in the project directory.
+			// Directory.GetCurrentDirectory() works reliably when running CLI or VS.
+			var basePath = Directory.GetCurrentDirectory();
+			var config = new ConfigurationBuilder()
+				.SetBasePath(basePath)
+				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+				.Build();
 
+			var connectionString = config.GetConnectionString("DefaultConnection");
+			if (string.IsNullOrWhiteSpace(connectionString))
+			{
+				throw new InvalidOperationException("Connection string 'DefaultConnection' not found in appsettings.json.");
+			}
+
+			optionsBuilder.UseSqlServer(connectionString);
+		}
 	}
 	
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,11 +55,11 @@ public partial class DatabaseFirstContext : DbContext
 				.ValueGeneratedNever()
 				.HasColumnName("CourseID");
 			entity.Property(e => e.CourseName).HasMaxLength(50);
-			entity.Property(e => e.Fk_TeacherID).HasColumnName("Fk_TeacherID");
+			entity.Property(e => e.FkTeacherID).HasColumnName("FkTeacherID");
 
 			entity.HasOne(d => d.FkTeacher).WithMany(p => p.Courses)
-				.HasForeignKey(d => d.Fk_TeacherID)
-				.HasConstraintName("FK__Course__Fk_Teach__398D8EEE");
+				.HasForeignKey(d => d.FkTeacherID)
+				.HasConstraintName("FK__Course__Fk_Teach_398D8EEE");
 		});
 
 		modelBuilder.Entity<Teacher>(entity =>
@@ -70,7 +88,7 @@ public partial class DatabaseFirstContext : DbContext
 				CourseName = "Engelska 1",
 				CourseStartDate = new DateOnly(2025, 12, 18),
 				CourseEndDate = new DateOnly(2025, 12, 19),
-				Fk_TeacherID = 1
+				FkTeacherID = 1
 			},
 			new Course
 			{
@@ -78,7 +96,7 @@ public partial class DatabaseFirstContext : DbContext
 				CourseName = "Engelska 2",
 				CourseStartDate = new DateOnly(2025, 12, 20),
 				CourseEndDate = new DateOnly(2025, 12, 21),
-				Fk_TeacherID = 1
+				FkTeacherID = 1
 			}
 		);
 

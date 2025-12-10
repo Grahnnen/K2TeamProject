@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace K2TeamProjectNEW.Migrations
+namespace K2TeamProjectNEW.Migrations.DatabaseFirst
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -31,7 +31,7 @@ namespace K2TeamProjectNEW.Migrations
                 {
                     CourseID = table.Column<int>(type: "int", nullable: false),
                     CourseName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Fk_TeacherID = table.Column<int>(type: "int", nullable: true),
+                    FkTeacherID = table.Column<int>(type: "int", nullable: true),
                     CourseStartDate = table.Column<DateOnly>(type: "date", nullable: true),
                     CourseEndDate = table.Column<DateOnly>(type: "date", nullable: true)
                 },
@@ -39,8 +39,8 @@ namespace K2TeamProjectNEW.Migrations
                 {
                     table.PrimaryKey("PK__Course__C92D71879A78CCFE", x => x.CourseID);
                     table.ForeignKey(
-                        name: "FK__Course__Fk_Teach__398D8EEE",
-                        column: x => x.Fk_TeacherID,
+                        name: "FK__Course__Fk_Teach_398D8EEE",
+                        column: x => x.FkTeacherID,
                         principalTable: "Teacher",
                         principalColumn: "TeacherID");
                 });
@@ -57,7 +57,7 @@ namespace K2TeamProjectNEW.Migrations
 
             migrationBuilder.InsertData(
                 table: "Course",
-                columns: new[] { "CourseID", "CourseEndDate", "CourseName", "CourseStartDate", "Fk_TeacherID" },
+                columns: new[] { "CourseID", "CourseEndDate", "CourseName", "CourseStartDate", "FkTeacherID" },
                 values: new object[,]
                 {
                     { 1, new DateOnly(2025, 12, 19), "Engelska 1", new DateOnly(2025, 12, 18), 1 },
@@ -65,9 +65,9 @@ namespace K2TeamProjectNEW.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_Fk_TeacherID",
+                name: "IX_Course_FkTeacherID",
                 table: "Course",
-                column: "Fk_TeacherID");
+                column: "FkTeacherID");
         }
 
         /// <inheritdoc />

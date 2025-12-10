@@ -4,19 +4,16 @@ using K2TeamProjectNEW.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace K2TeamProjectNEW.Migrations
+namespace K2TeamProjectNEW.Migrations.DatabaseFirst
 {
     [DbContext(typeof(DatabaseFirstContext))]
-    [Migration("20251209164636_InitialCreate")]
-    partial class InitialCreate
+    partial class DatabaseFirstContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,14 +39,14 @@ namespace K2TeamProjectNEW.Migrations
                     b.Property<DateOnly?>("CourseStartDate")
                         .HasColumnType("date");
 
-                    b.Property<int?>("Fk_TeacherID")
+                    b.Property<int?>("FkTeacherID")
                         .HasColumnType("int")
-                        .HasColumnName("Fk_TeacherID");
+                        .HasColumnName("FkTeacherID");
 
                     b.HasKey("CourseID")
                         .HasName("PK__Course__C92D71879A78CCFE");
 
-                    b.HasIndex("Fk_TeacherID");
+                    b.HasIndex("FkTeacherID");
 
                     b.ToTable("Course", (string)null);
 
@@ -60,7 +57,7 @@ namespace K2TeamProjectNEW.Migrations
                             CourseEndDate = new DateOnly(2025, 12, 19),
                             CourseName = "Engelska 1",
                             CourseStartDate = new DateOnly(2025, 12, 18),
-                            Fk_TeacherID = 1
+                            FkTeacherID = 1
                         },
                         new
                         {
@@ -68,7 +65,7 @@ namespace K2TeamProjectNEW.Migrations
                             CourseEndDate = new DateOnly(2025, 12, 21),
                             CourseName = "Engelska 2",
                             CourseStartDate = new DateOnly(2025, 12, 20),
-                            Fk_TeacherID = 1
+                            FkTeacherID = 1
                         });
                 });
 
@@ -110,8 +107,8 @@ namespace K2TeamProjectNEW.Migrations
                 {
                     b.HasOne("K2TeamProjectNEW.Models.Teacher", "FkTeacher")
                         .WithMany("Courses")
-                        .HasForeignKey("Fk_TeacherID")
-                        .HasConstraintName("FK__Course__Fk_Teach__398D8EEE");
+                        .HasForeignKey("FkTeacherID")
+                        .HasConstraintName("FK__Course__Fk_Teach_398D8EEE");
 
                     b.Navigation("FkTeacher");
                 });

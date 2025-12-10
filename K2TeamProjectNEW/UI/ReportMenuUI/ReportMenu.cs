@@ -1,4 +1,5 @@
 ﻿using K2TeamProjectNEW.Data;
+using K2TeamProjectNEW.UI.ReportMenuUI.Method;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace K2TeamProjectNEW.UI.ReportMenuUI
                 {
                     switch (menuChoiceReportMenu)
                     {
-                        case "1": //ShowStudentOverview(data); break;
+                        case "1": ReportMenuMethods.ShowStudentOverview(data); break;
                         case "2": //ShowActiveCourses(data); break;
                         case "3": //ShowGradeStatistics(data); break;
                         case "4": return;
