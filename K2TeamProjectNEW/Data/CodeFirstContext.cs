@@ -27,8 +27,8 @@ namespace K2TeamProjectNEW.Data
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-
-		}
+            optionsBuilder.UseSqlServer("Server=DESKTOP-G90R9MJ;Database=K2SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;");
+        }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
