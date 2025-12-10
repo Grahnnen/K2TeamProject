@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace K2TeamProjectNEW.Migrations
 {
-    [DbContext(typeof(K2TeamProjectDbContext))]
+    [DbContext(typeof(DatabaseFirstContext))]
     [Migration("20251209164636_InitialCreate")]
     partial class InitialCreate
     {

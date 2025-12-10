@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace K2TeamProjectNEW.Data
 {
-	public partial class K2TeamProjectCodeFirstDbContext : DbContext
+	public partial class CodeFirstContext : DbContext
 	{
-		public K2TeamProjectCodeFirstDbContext()
+		public CodeFirstContext()
 		{
 		}
 
-		public K2TeamProjectCodeFirstDbContext(DbContextOptions<K2TeamProjectCodeFirstDbContext> options)
+		public CodeFirstContext(DbContextOptions<CodeFirstContext> options)
 			: base(options)
 		{
 		}
@@ -26,7 +26,9 @@ namespace K2TeamProjectNEW.Data
 		public DbSet<Student> Students { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-	=> optionsBuilder.UseSqlServer("Server=localhost;Database=K2SchoolDb;Trusted_Connection=True;TrustServerCertificate=True;");
+		{
+
+		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
