@@ -9,7 +9,7 @@ public partial class Course
 
     public string CourseName { get; set; } = null!;
 
-    public int? Fk_TeacherID { get; set; }
+    public int? FkTeacherID { get; set; }
 
     public DateOnly? CourseStartDate { get; set; }
 

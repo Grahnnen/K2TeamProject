@@ -1,5 +1,7 @@
 ﻿using K2TeamProjectNEW.Models;
+using K2TeamProjectNEW.Models.Views;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +27,28 @@ namespace K2TeamProjectNEW.Data
 		public DbSet<Scheduling> Schedulings { get; set; }
 		public DbSet<Student> Students { get; set; }
 
+		public DbSet<StudentOverview> StudentOverview { get; set; }
+
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
+			if (!optionsBuilder.IsConfigured)
+			{
+				// Try to read connection string from appsettings.json in the project directory.
+				// Directory.GetCurrentDirectory() works reliably when running CLI or VS.
+				var basePath = Directory.GetCurrentDirectory();
+				var config = new ConfigurationBuilder()
+					.SetBasePath(basePath)
+					.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+					.Build();
 
+				var connectionString = config.GetConnectionString("DefaultConnection");
+				if (string.IsNullOrWhiteSpace(connectionString))
+				{
+					throw new InvalidOperationException("Connection string 'DefaultConnection' not found in appsettings.json.");
+				}
+
+				optionsBuilder.UseSqlServer(connectionString);
+			}
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -62,6 +83,13 @@ namespace K2TeamProjectNEW.Data
 				.WithMany()
 				.HasForeignKey(e => e.FkStudentID)
 				.OnDelete(DeleteBehavior.NoAction);
+
+			modelBuilder.Entity<StudentOverview>(eb =>
+			{
+				eb.HasNoKey();
+				eb.ToView("vwStudentOverview");
+				eb.Property(v => v.GradedDate).HasColumnType("date");
+			});
 
 			modelBuilder.Entity<Teacher>()
 				.ToTable("Teacher", tb => tb.ExcludeFromMigrations());
