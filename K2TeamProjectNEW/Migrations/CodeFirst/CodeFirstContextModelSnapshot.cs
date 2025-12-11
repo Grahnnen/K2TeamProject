@@ -400,6 +400,49 @@ namespace K2TeamProjectNEW.Migrations
                         });
                 });
 
+            modelBuilder.Entity("K2TeamProjectNEW.Models.Views.StudentOverview", b =>
+                {
+                    b.Property<int?>("CourseID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CourseName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CourseTeacherID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CourseTeacherName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("GradeID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GradeScale")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly?>("GradedDate")
+                        .HasColumnType("date");
+
+                    b.Property<int?>("GradingTeacherID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GradingTeacherName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StudentFirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudentID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StudentLastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("vwStudentOverview", (string)null);
+                });
+
             modelBuilder.Entity("K2TeamProjectNEW.Models.Course", b =>
                 {
                     b.HasOne("K2TeamProjectNEW.Models.Teacher", "FkTeacher")

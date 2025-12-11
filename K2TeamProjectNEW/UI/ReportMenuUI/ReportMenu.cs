@@ -33,7 +33,7 @@ namespace K2TeamProjectNEW.UI.ReportMenuUI
                     {
                         case "1": ReportMenuMethods.ShowStudentOverview(data); break;
                         case "2": ReportMenuMethods.ShowActiveCourses(data); break;
-                        case "3": //ShowGradeStatistics(data); break;
+                        case "3": ReportMenuMethods.ShowGradeStatistics(data); break;
                         case "4": return;
                         default:
                             Console.WriteLine("Felaktigt val.");

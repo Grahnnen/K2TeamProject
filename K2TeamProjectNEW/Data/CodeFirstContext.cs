@@ -1,4 +1,5 @@
 ﻿using K2TeamProjectNEW.Models;
+using K2TeamProjectNEW.Models.Views;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -25,6 +26,8 @@ namespace K2TeamProjectNEW.Data
 		public DbSet<Grade> Grades { get; set; }
 		public DbSet<Scheduling> Schedulings { get; set; }
 		public DbSet<Student> Students { get; set; }
+
+		public DbSet<StudentOverview> StudentOverview { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
@@ -80,6 +83,13 @@ namespace K2TeamProjectNEW.Data
 				.WithMany()
 				.HasForeignKey(e => e.FkStudentID)
 				.OnDelete(DeleteBehavior.NoAction);
+
+			modelBuilder.Entity<StudentOverview>(eb =>
+			{
+				eb.HasNoKey();
+				eb.ToView("vwStudentOverview");
+				eb.Property(v => v.GradedDate).HasColumnType("date");
+			});
 
 			modelBuilder.Entity<Teacher>()
 				.ToTable("Teacher", tb => tb.ExcludeFromMigrations());
