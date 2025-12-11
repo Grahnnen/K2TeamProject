@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace K2TeamProjectNEW.Migrations.K2TeamProjectCodeFirstDb
+namespace K2TeamProjectNEW.Migrations.CodeFirst
 {
     [DbContext(typeof(CodeFirstContext))]
-    [Migration("20251209164714_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251210144520_CodeFirstMigration")]
+    partial class CodeFirstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,15 +78,12 @@ namespace K2TeamProjectNEW.Migrations.K2TeamProjectCodeFirstDb
                     b.Property<DateOnly?>("CourseStartDate")
                         .HasColumnType("date");
 
-                    b.Property<int?>("FkTeacherTeacherID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Fk_TeacherID")
+                    b.Property<int?>("FkTeacherID")
                         .HasColumnType("int");
 
                     b.HasKey("CourseID");
 
-                    b.HasIndex("FkTeacherTeacherID");
+                    b.HasIndex("FkTeacherID");
 
                     b.ToTable("Course", null, t =>
                         {
@@ -410,7 +407,7 @@ namespace K2TeamProjectNEW.Migrations.K2TeamProjectCodeFirstDb
                 {
                     b.HasOne("K2TeamProjectNEW.Models.Teacher", "FkTeacher")
                         .WithMany("Courses")
-                        .HasForeignKey("FkTeacherTeacherID");
+                        .HasForeignKey("FkTeacherID");
 
                     b.Navigation("FkTeacher");
                 });

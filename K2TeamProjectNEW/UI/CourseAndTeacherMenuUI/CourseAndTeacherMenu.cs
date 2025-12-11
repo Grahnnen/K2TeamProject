@@ -1,4 +1,5 @@
 ﻿using K2TeamProjectNEW.Data;
+using K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,9 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI
                 Console.WriteLine("[3] Lista kurser");
                 Console.WriteLine("[4] Lista lärare");
                 Console.WriteLine("[5] Ta bort kurs");
-                Console.WriteLine("[6] Tillbaka");
+                Console.WriteLine("[6] Ta bort lärare");
+                Console.WriteLine("[7] Koppla lärare till kurs");
+                Console.WriteLine("[8] Tillbaka");
                 Console.WriteLine("==============================");
                 Console.Write("Välj alternativ: ");
 
@@ -32,12 +35,14 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI
                 {
                     switch (menuChoiceCourseAndTeacherMenu)
                     {
-                        case "1": //AddCourse(data); break;
-                        case "2": //AddTeacher(data); break;
-                        case "3": //ListCourse(data); break;
-                        case "4": //ListTeacher(data); break;
-                        case "5": //RemoveCourse(data); break;
-                        case "6": return;
+                        case "1": CourseAndTeacherMethods.AddCourse(data); break;
+                        case "2": CourseAndTeacherMethods.AddTeacher(data); break;
+                        case "3": CourseAndTeacherMethods.ListCourses(data); break;
+                        case "4": CourseAndTeacherMethods.ListTeachers(data); break;
+                        case "5": CourseAndTeacherMethods.RemoveCourse(data); break;
+                        case "6": CourseAndTeacherMethods.RemoveTeacher(data); break;
+                        case "7": CourseAndTeacherMethods.LinkTeacherAndCourse(data); break;
+                        case "8": return;
                         default:
                             Console.WriteLine("Felaktigt val.");
                             Console.ReadKey();

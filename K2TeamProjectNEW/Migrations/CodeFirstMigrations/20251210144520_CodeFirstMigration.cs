@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace K2TeamProjectNEW.Migrations.K2TeamProjectCodeFirstDb
+namespace K2TeamProjectNEW.Migrations.CodeFirst
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class CodeFirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
