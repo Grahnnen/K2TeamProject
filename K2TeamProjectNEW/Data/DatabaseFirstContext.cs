@@ -23,25 +23,25 @@ public partial class DatabaseFirstContext : DbContext
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
-		if (!optionsBuilder.IsConfigured)
-		{
-			// Try to read connection string from appsettings.json in the project directory.
-			// Directory.GetCurrentDirectory() works reliably when running CLI or VS.
-			var basePath = Directory.GetCurrentDirectory();
-			var config = new ConfigurationBuilder()
-				.SetBasePath(basePath)
-				.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-				.Build();
+        if (!optionsBuilder.IsConfigured)
+        {
+            // Try to read connection string from appsettings.json in the project directory.
+            // Directory.GetCurrentDirectory() works reliably when running CLI or VS.
+            var basePath = Directory.GetCurrentDirectory();
+            var config = new ConfigurationBuilder()
+                .SetBasePath(basePath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                .Build();
 
-			var connectionString = config.GetConnectionString("DefaultConnection");
-			if (string.IsNullOrWhiteSpace(connectionString))
-			{
-				throw new InvalidOperationException("Connection string 'DefaultConnection' not found in appsettings.json.");
-			}
+            var connectionString = config.GetConnectionString("DefaultConnection");
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new InvalidOperationException("Connection string 'DefaultConnection' not found in appsettings.json.");
+            }
 
-			optionsBuilder.UseSqlServer(connectionString);
-		}
-	}
+            optionsBuilder.UseSqlServer(connectionString);
+        }
+    }
 	
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -59,7 +59,7 @@ public partial class DatabaseFirstContext : DbContext
 
 			entity.HasOne(d => d.FkTeacher).WithMany(p => p.Courses)
 				.HasForeignKey(d => d.FkTeacherID)
-				.HasConstraintName("FK__Course__Fk_Teach_398D8EEE");
+				.HasConstraintName("FK__Course__Fk_Teach__398D8EEE");
 		});
 
 		modelBuilder.Entity<Teacher>(entity =>

@@ -31,25 +31,25 @@ namespace K2TeamProjectNEW.Data
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			if (!optionsBuilder.IsConfigured)
-			{
-				// Try to read connection string from appsettings.json in the project directory.
-				// Directory.GetCurrentDirectory() works reliably when running CLI or VS.
-				var basePath = Directory.GetCurrentDirectory();
-				var config = new ConfigurationBuilder()
-					.SetBasePath(basePath)
-					.AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-					.Build();
+            if (!optionsBuilder.IsConfigured)
+            {
+                // Try to read connection string from appsettings.json in the project directory.
+                // Directory.GetCurrentDirectory() works reliably when running CLI or VS.
+                var basePath = Directory.GetCurrentDirectory();
+                var config = new ConfigurationBuilder()
+                    .SetBasePath(basePath)
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                    .Build();
 
-				var connectionString = config.GetConnectionString("DefaultConnection");
-				if (string.IsNullOrWhiteSpace(connectionString))
-				{
-					throw new InvalidOperationException("Connection string 'DefaultConnection' not found in appsettings.json.");
-				}
+                var connectionString = config.GetConnectionString("DefaultConnection");
+                if (string.IsNullOrWhiteSpace(connectionString))
+                {
+                    throw new InvalidOperationException("Connection string 'DefaultConnection' not found in appsettings.json.");
+                }
 
-				optionsBuilder.UseSqlServer(connectionString);
-			}
-		}
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+        }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

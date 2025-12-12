@@ -40,7 +40,7 @@ namespace K2TeamProjectNEW.UI.MainMenuUI
                     case "4": ReportMenu.Show(data); break;
                     case "0": running = false; return;
                     default:
-                        Console.WriteLine("Felaktigt val.");
+                        Console.WriteLine("Felaktigt val!");
                         Console.ReadKey();
                         break;
                 }
