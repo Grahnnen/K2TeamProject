@@ -1,4 +1,4 @@
-# K2TeamProjectNEW
+# K2TeamProject
 
 A console application for managing school data, including students, courses, teachers, enrollments, grades, and scheduling.
 
