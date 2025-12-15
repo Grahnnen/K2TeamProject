@@ -1,4 +1,6 @@
 ﻿using K2TeamProjectNEW.Data;
+using K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods;
+using K2TeamProjectNEW.UI.ScheduleMenuUI.Method;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +32,9 @@ namespace K2TeamProjectNEW.UI.ScheduleMenuUI
                 {
                     switch (menuChoiceScheduleMenu)
                     {
-                        case "1": //AddSchedulePost(data); break;
-                        case "2": //RemoveSchedulePost(data); break;
-                        case "3": //ListAllSchedulePosts(data); break;
+                        case "1": ScheduleMenuMethods.AddSchedulePost(data); break;
+                        case "2": ScheduleMenuMethods.RemoveSchedulePost(data); break;
+                        case "3": ScheduleMenuMethods.ListAllSchedulePosts(data); break;
                         case "4": return;
                         default:
                             Console.WriteLine("Felaktigt val.");
