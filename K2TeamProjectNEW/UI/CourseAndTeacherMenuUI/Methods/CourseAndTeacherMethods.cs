@@ -23,15 +23,14 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
 
             if (string.IsNullOrWhiteSpace(courseName) || courseName.All(char.IsDigit))
             {
-                Console.WriteLine("Ogiltigt kursnamn!");
+                Console.WriteLine("\n❌ Ogiltigt kursnamn!");
                 Console.ReadKey();
                 return;
             }
 
-            if (data.DatabaseFirst.Courses
-                .Any(c => c.CourseName.ToLower() == courseName.ToLower()))
+            if (data.DatabaseFirst.Courses.Any(c => c.CourseName.ToLower() == courseName.ToLower()))
             {
-                Console.WriteLine("\nEn kurs med detta namn finns redan!");
+                Console.WriteLine("\n❌ En kurs med detta namn finns redan!");
                 Console.ReadKey();
                 return;
             }
@@ -46,7 +45,7 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 !DateOnly.TryParse(endDateInput, out var endDate) ||
                 endDate < startDate)
             {
-                Console.WriteLine("Ogiltigt datum! Slutdatum får inte vara före startdatum!");
+                Console.WriteLine("\n❌ Ogiltigt datum! Slutdatum får inte vara före startdatum!");
                 Console.ReadKey();
                 return;
             }
@@ -55,11 +54,12 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("=== Lägg till kurs ===");
 
-                Console.WriteLine("=== Lägg till kurs ===\n");
-                Console.WriteLine($"Kursnamn: {courseName}");
-                Console.WriteLine($"Startdatum: {startDate:yyyy-MM-dd}");
-                Console.WriteLine($"Slutdatum: {endDate:yyyy-MM-dd}");
+                Console.WriteLine("\n📋 Kursinformation (förhandsvisning):\n");
+                Console.WriteLine($"📚 Kurs: {courseName}");
+                Console.WriteLine($"📅 Startdatum: {startDate:yyyy-MM-dd}");
+                Console.WriteLine($"🏁 Slutdatum: {endDate:yyyy-MM-dd}");
 
                 Console.Write("\nVill du koppla denna kurs till en lärare? (Ja/Nej): ");
                 var choice = Console.ReadLine()?.Trim();
@@ -77,7 +77,7 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 }
                 else
                 {
-                    Console.WriteLine("\nOgiltigt val! Du måste skriva 'Ja' eller 'Nej'");
+                    Console.WriteLine("\n❌ Ogiltigt val! Du måste skriva 'Ja' eller 'Nej'");
                     Console.ReadKey();
                 }
             }
@@ -89,7 +89,7 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 var teachers = data.DatabaseFirst.Teachers.ToList();
                 if (teachers.Count == 0)
                 {
-                    Console.WriteLine("Inga lärare finns att tilldela!");
+                    Console.WriteLine("\n❌ Inga lärare finns att tilldela!");
                     Console.ReadKey();
                     return;
                 }
@@ -106,7 +106,7 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 Console.Write("\nAnge lärarens ID: ");
                 if (!int.TryParse(Console.ReadLine(), out int tId) || !teachers.Any(t => t.TeacherID == tId))
                 {
-                    Console.WriteLine("Ogiltigt ID eller lärare hittades inte!");
+                    Console.WriteLine("\n❌ Ogiltigt ID eller lärare hittades inte!");
                     Console.ReadKey();
                     return;
                 }
@@ -136,22 +136,25 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 Console.WriteLine("\nKursen lades till utan lärare!");
             }
 
-            Console.WriteLine("\n=== Kurs tillagd ===");
-            Console.WriteLine($"Kurs: {course.CourseName}");
-            Console.WriteLine($"KursID: {course.CourseID}");
-            Console.WriteLine($"Startdatum: {course.CourseStartDate}");
-            Console.WriteLine($"Slutdatum: {course.CourseEndDate}");
+            Console.Clear();
+            Console.WriteLine("=== Lägg till kurs ===");
 
+            Console.WriteLine("\n🎉 Kursen har lagts till ✅\n");
+            Console.WriteLine($"📚 Kurs: {course.CourseName}");
+            Console.WriteLine($"🆔 KursID: {course.CourseID}");
+            Console.WriteLine($"📅 Startdatum: {course.CourseStartDate:yyyy-MM-dd}");
+            Console.WriteLine($"🏁 Slutdatum: {course.CourseEndDate:yyyy-MM-dd}");
             if (teacherId.HasValue)
             {
                 var teacher = data.DatabaseFirst.Teachers.First(t => t.TeacherID == teacherId);
-                Console.WriteLine($"Tilldelad lärare: {teacher.TeacherName} (ID: {teacher.TeacherID})");
+                Console.WriteLine($"🎓 Tilldelad lärare: {teacher.TeacherName} (ID: {teacher.TeacherID})");
+
             }
             else
             {
-                Console.WriteLine("Ingen lärare kopplad!");
+                Console.WriteLine("\n⚠  Ingen lärare tilldelad!");
             }
-
+            
             Console.ReadKey();
         }
 
@@ -166,7 +169,7 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
 
             if (string.IsNullOrWhiteSpace(teacherName) || teacherName.All(char.IsDigit))
             {
-                Console.WriteLine("Ogiltigt lärarnamn!");
+                Console.WriteLine("\n❌ Ogiltigt lärarnamn!");
                 Console.ReadKey();
                 return;
             }
@@ -174,7 +177,7 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
             // Hämta nästa lediga teacherid eftersom det inte genereras automatiskt
             int nextTeacherId = data.DatabaseFirst.Teachers.Any()
             ? data.DatabaseFirst.Teachers.Max(t => t.TeacherID) + 1
-            :1;
+            : 1;
 
             var teacher = new Teacher
             {
@@ -189,10 +192,12 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("=== Lägg till lärare ===");
 
-                Console.WriteLine("=== Lägg till lärare ===\n");
-                Console.WriteLine($"Lärarnamn: {teacherName}");
-                Console.WriteLine($"LärareID: {nextTeacherId}");
+
+                Console.WriteLine("\n📋 Lärarinformation (förhandsvisning):\n");
+                Console.WriteLine($"🎓 Lärare: {teacherName}");
+                Console.WriteLine($"🆔 LärareID: {nextTeacherId}");
 
                 Console.Write("\nVill du koppla denna lärare till en kurs? (Ja/Nej): ");
                 var choice = Console.ReadLine()?.Trim();
@@ -210,7 +215,7 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 }
                 else
                 {
-                    Console.WriteLine("\nOgiltigt val! Du måste skriva 'Ja' eller 'Nej'");
+                    Console.WriteLine("\n❌ Ogiltigt val! Du måste skriva 'Ja' eller 'Nej'");
                     Console.ReadKey();
                 }
             }
@@ -219,25 +224,31 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
 
             if (attachCourses)
             {
-                // Koppla tillagd lärare till kurser
+                // Hämta endast kurser utan lärare
                 var courses = data.DatabaseFirst.Courses
                 .Include(c => c.FkTeacher)
+                .Where(c => c.FkTeacherID == null)
                 .OrderBy(c => c.CourseID)
                 .ToList();
 
-                if (courses.Count > 0)
+                if (courses.Count == 0)
+
+                {
+                    Console.WriteLine("\n❌ Inga kurser finns att koppla!");
+                    Console.ReadKey();
+                }
+                else
                 {
                     Console.WriteLine("\nTillgängliga kurser:\n");
-                    Console.WriteLine($"{"ID",-5} {"Kurs",-25} {"Lärare",-20} {"Start",-12} {"Slut",-12}");
-                    Console.WriteLine(new string('-', 80));
+                    Console.WriteLine($"{"ID",-5} {"Kurs",-25} {"Start",-12} {"Slut",-12}");
+                    Console.WriteLine(new string('-', 55));
 
                     foreach (var c in courses)
                     {
-                        string teacherNameCourse = c.FkTeacher != null ? c.FkTeacher.TeacherName : "-";
                         string startDate = c.CourseStartDate.HasValue ? c.CourseStartDate.Value.ToString("yyyy-MM-dd") : "-";
                         string endDate = c.CourseEndDate.HasValue ? c.CourseEndDate.Value.ToString("yyyy-MM-dd") : "-";
 
-                        Console.WriteLine($"{c.CourseID,-5} {c.CourseName,-25} {teacherNameCourse,-20} {startDate,-12} {endDate,-12}");
+                        Console.WriteLine($"{c.CourseID,-5} {c.CourseName,-25} {startDate,-12} {endDate,-12}");
                     }
 
                     Console.Write("\nAnge kurs-ID som läraren ska undervisa: ");
@@ -247,16 +258,27 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                     {
                         var ids = courseIdInput.Split(',')
                                                 .Select(s => int.TryParse(s.Trim(), out var id) ? id : -1)
-                                                .Where(id => id != -1);
+                                                .Where(id => id != -1)
+                                                .ToList();
 
                         foreach (var courseId in ids)
                         {
                             var course = data.DatabaseFirst.Courses.Find(courseId);
-                            if (course != null)
+
+                            if (course == null)
                             {
-                                course.FkTeacherID = teacher.TeacherID;
-                                linkedCourses.Add(course.CourseName);
+                                Console.WriteLine($"\n❌ Kurs med ID {courseId} hittades inte!");
+                                continue;
                             }
+
+                            if (course.FkTeacherID != null)
+                            {
+                                Console.WriteLine($"\n⚠ Kurs '{course.CourseName}' (ID: {course.CourseID}) har redan en lärare och kopplas inte.");
+                                continue;
+                            }
+
+                            course.FkTeacherID = teacher.TeacherID;
+                            linkedCourses.Add(course.CourseName);
                         }
 
                         data.DatabaseFirst.SaveChanges();
@@ -264,13 +286,17 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 }
             }
 
-            Console.WriteLine("\n=== Lärare tillagd ===");
-            Console.WriteLine($"Namn: {teacher.TeacherName}");
-            Console.WriteLine($"ID: {teacher.TeacherID}");
-            if (linkedCourses.Count > 0)
-                Console.WriteLine("Undervisar kurs: " + string.Join(", ", linkedCourses));
+            Console.Clear();
+            Console.WriteLine("=== Lägg till lärare ===");
+
+            Console.WriteLine("\n🎉 Läraren har lagts till ✅\n");
+            Console.WriteLine($"🎓 Lärare: {teacher.TeacherName}");
+            Console.WriteLine($"🆔 LärareID: {teacher.TeacherID}");
+
+            if (linkedCourses.Any())
+                Console.WriteLine("📚 Undervisar kurs: " + string.Join(", ", linkedCourses));
             else
-                Console.WriteLine("Inga kurser kopplade!");
+                Console.WriteLine("\n⚠  Inga kurser tilldelad!");
 
             Console.ReadKey();
         }
@@ -387,7 +413,7 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 Console.WriteLine($"{c.CourseID,-5} {c.CourseName,-25} {teacherName,-20} {startDate,-12} {endDate,-12}");
             }
 
-            Console.WriteLine("\nAnge ID på kursen som ska tas bort: ");
+            Console.Write("\nAnge ID på kursen som ska tas bort: ");
             var courseIdInput = Console.ReadLine();
 
             var courseIds = courseIdInput.Split(',')
@@ -403,6 +429,17 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 return;
             }
 
+            // Rensar menyn för att visa vad som tagits bort
+            Console.Clear();
+
+            // Loggning av vad som tagits bort
+            var log = new List<string>();
+            log.Add("=== BORTTAGNING LOGG ===\n");
+            log.Add($"Tidpunkt: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            log.Add("");
+            log.Add("Borttagna kurser:");
+            log.Add("");
+
             foreach (var courseId in courseIds)
             {
                 var courseToRemove = data.DatabaseFirst.Courses
@@ -411,7 +448,8 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
 
                 if (courseToRemove == null)
                 {
-                    Console.WriteLine($"Kursen med ID {courseId} hittades inte!");
+                    log.Add($"- (ID: {courseId}) - kursen hittades inte!");
+                    log.Add("");
                     continue;
                 }
 
@@ -428,12 +466,26 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 data.DatabaseFirst.Courses.Remove(courseToRemove);
                 data.DatabaseFirst.SaveChanges();
 
-                Console.WriteLine($"\nKursen '{courseToRemove.CourseName}' har tagits bort!");
-                if (enrollmentsToUpdate.Count > 0)
-                    Console.WriteLine($"Kopplingar till {enrollmentsToUpdate.Count} registrering(ar) har tagits bort!");
-                if (schedulingsToUpdate.Count > 0)
-                    Console.WriteLine($"Kopplingar till {schedulingsToUpdate.Count} schemaläggning(ar) har tagits bort!");
+                log.Add($"❌ {courseToRemove.CourseName} (ID: {courseToRemove.CourseID})");
+
+                if (courseToRemove.FkTeacher != null)
+                    log.Add($"   • Kopplad lärare: {courseToRemove.FkTeacher.TeacherName} (ID: {courseToRemove.FkTeacherID})");
+
+                else
+                    log.Add($"   • Kopplad lärare: Ingen");
+
+                log.Add("");
+
+                log.Add("   • Elevkopplingar borttagna:");
+                log.Add($"       – Registreringar borttagna: {enrollmentsToUpdate.Count}");
+                log.Add($"       – Schemaläggningar borttagna: {schedulingsToUpdate.Count}");
+                log.Add("");
             }
+
+            log.Add("=== Klart ===");
+
+            foreach (var line in log)
+                Console.WriteLine(line);
 
             Console.ReadKey();
         }
@@ -468,7 +520,7 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 Console.WriteLine($"{t.TeacherID,-5} {t.TeacherName,-25} {courses}");
             }
 
-            Console.WriteLine("\nAnge ID på vilken eller vilka lärare som ska tas bort: ");
+            Console.Write("\nAnge ID på vilken eller vilka lärare som ska tas bort: ");
             var teacherIdInput = Console.ReadLine();
 
             var teacherIds = teacherIdInput.Split(',')
@@ -484,6 +536,17 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 return;
             }
 
+            // Rensar menyn för att visa vad som tagits bort
+            Console.Clear();
+
+            // Loggning av vad som tagits bort
+            var log = new List<string>();
+            log.Add("=== BORTTAGNING LOGG ===\n");
+            log.Add($"Tidpunkt: {DateTime.Now:yyyy-MM-dd HH:mm:ss}");
+            log.Add("");
+            log.Add("Borttagna lärare:");
+            log.Add("");
+
             foreach (var teacherId in teacherIds)
             {
                 var teacherToRemove = data.DatabaseFirst.Teachers
@@ -492,7 +555,8 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
 
                 if (teacherToRemove == null)
                 {
-                    Console.WriteLine($"Läraren med ID {teacherId} hittades inte!");
+                    log.Add($"- (ID: {teacherId}) – Läraren hittades inte");
+                    log.Add("");
                     continue;
                 }
 
@@ -505,6 +569,15 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                     .Where(g => g.FkTeacherID == teacherId)
                     .ToList();
 
+                // Hämta kopplingar som listor
+                var enrollmentsToUpdate = data.CodeFirst.Enrollments
+                    .Where(e => coursesToUpdate.Select(c => c.CourseID).Contains(e.FkCourseID))
+                    .ToList();
+
+                var schedulingsToUpdate = data.CodeFirst.Schedulings
+                    .Where(s => coursesToUpdate.Select(c => c.CourseID).Contains(s.FkCourseID))
+                    .ToList();
+
                 // Sätt FK till null på kurser
                 foreach (var course in coursesToUpdate)
                     course.FkTeacherID = null;
@@ -513,12 +586,32 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 data.DatabaseFirst.Teachers.Remove(teacherToRemove);
                 data.DatabaseFirst.SaveChanges();
 
-                Console.WriteLine($"\nLäraren '{teacherToRemove.TeacherName}' har tagits bort!");
-                if (coursesToUpdate.Count > 0)
-                    Console.WriteLine($"Kopplingar till {coursesToUpdate.Count} kurs(er) har tagits bort!");
-                if (gradesToUpdate.Count > 0)
-                    Console.WriteLine($"Kopplingar till {gradesToUpdate.Count} betyg har tagits bort!");
+                log.Add($"❌ {teacherToRemove.TeacherName} (ID: {teacherToRemove.TeacherID})");
+
+                if (coursesToUpdate.Any())
+                {
+                    log.Add($"   • Kurser bortkopplade: {coursesToUpdate.Count}");
+                    foreach (var course in coursesToUpdate)
+                        log.Add($"    - {course.CourseName} (CourseID: {course.CourseID})");
+                }
+                else
+                {
+                    log.Add("   • Kurser bortkopplade: 0");
+                }
+
+                log.Add("");
+
+                log.Add("   • Elevkopplingar borttagna:");
+                log.Add($"       – Registreringar: {enrollmentsToUpdate.Count}");
+                log.Add($"       – Betyg: {gradesToUpdate.Count}");
+                log.Add($"       – Schemaläggningar: {schedulingsToUpdate.Count}");
+                log.Add("");
             }
+
+            log.Add("=== Klart ===");
+
+            foreach (var line in log)
+                Console.WriteLine(line);
 
             Console.ReadKey();
         }
@@ -547,114 +640,85 @@ namespace K2TeamProjectNEW.UI.CourseAndTeacherMenuUI.Methods
                 return;
             }
 
-            Console.WriteLine("Vill du koppla:\n1) Lärare till kurs\n2) Kurs till lärare");
+            Console.WriteLine("[1] Lärare till kurs");
+            Console.WriteLine("[2] Kurs till lärare");
+            Console.Write("\nAnge ditt val: ");
             var choiceConnect = Console.ReadLine()?.Trim();
+
+            if (choiceConnect != "1" && choiceConnect != "2")
+            {
+                Console.WriteLine("Ogiltigt val!");
+                Console.ReadKey();
+                return;
+            }
+
+            // Visa lärare utan kurser = Courses - listan är tom eller null(lärare kan ha flera kurser)
+            var teachersWithoutCourse = teachers.Where(t => t.Courses == null || !t.Courses.Any()).ToList();
+
+            if (!teachersWithoutCourse.Any())
+            {
+                Console.WriteLine("Alla lärare har redan kurser!");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("\nTillgängliga lärare utan kurser:\n");
+            Console.WriteLine($"{"ID",-5} {"Lärare",-25}");
+            Console.WriteLine(new string('-', 32));
+            foreach (var t in teachersWithoutCourse)
+            {
+                Console.WriteLine($"{t.TeacherID,-5} {t.TeacherName,-25}");
+            }
+
+            Console.Write("\nAnge lärarens ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int tId) || !teachersWithoutCourse.Any(t => t.TeacherID == tId))
+            {
+                Console.WriteLine("Ogiltigt lärar-ID!");
+                Console.ReadKey();
+                return;
+            }
+
+            // Visa kurser utan lärare = FkTeacherID är null(1 kurs har max 1 lärare)
+            var coursesWithoutTeachers = courses.Where(c => c.FkTeacherID == null).ToList();
+
+            if (!coursesWithoutTeachers.Any())
+            {
+                Console.WriteLine("Alla kurser har redan lärare!");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.WriteLine("\nTillgängliga kurser utan lärare:\n");
+            Console.WriteLine($"{"ID",-5} {"Kurs",-25}");
+            Console.WriteLine(new string('-', 32));
+            foreach (var c in coursesWithoutTeachers)
+            {
+                Console.WriteLine($"{c.CourseID,-5} {c.CourseName,-25}");
+            }
+
+            Console.Write("\nAnge kursens ID: ");
+            if (!int.TryParse(Console.ReadLine(), out int cId) || !coursesWithoutTeachers.Any(c => c.CourseID == cId))
+            {
+                Console.WriteLine("Ogiltigt kurs-ID!");
+                Console.ReadKey();
+                return;
+            }
+
+            // Koppla beroende på val
+            var course = data.DatabaseFirst.Courses.Find(cId);
+            course.FkTeacherID = tId;
+            data.DatabaseFirst.SaveChanges();
+
+            var teacherName = teachers.First(t => t.TeacherID == tId).TeacherName;
+            var courseName = course.CourseName;
 
             if (choiceConnect == "1")
             {
-                // Visa lärare utan kurser = Courses-listan är tom eller null (lärare kan ha flera kurser)
-                var teachersWithoutCourse = teachers.Where(t => t.Courses == null || !t.Courses.Any()).ToList();
-
-                if (!teachersWithoutCourse.Any())
-                {
-                    Console.WriteLine("Alla lärare har redan kurser!");
-                    Console.ReadKey();
-                    return;
-                }
-
-                Console.WriteLine("\nTillgängliga lärare utan kurser:");
-                foreach (var t in teachersWithoutCourse)
-                    Console.WriteLine($"{t.TeacherID} - {t.TeacherName}");
-
-                Console.WriteLine("\nAnge lärarens ID: ");
-                if (!int.TryParse(Console.ReadLine(), out int tId) || !teachersWithoutCourse.Any(t => t.TeacherID == tId))
-                {
-                    Console.WriteLine("Ogiltigt lärar-ID!");
-                    Console.ReadKey();
-                    return;
-                }
-
-                // Visa kurser utan lärare = FkTeacherID är null (1 kurs har max 1 lärare)
-                var coursesWithoutTeachers = courses.Where(c => c.FkTeacherID == null).ToList();
-
-                if (!coursesWithoutTeachers.Any())
-                {
-                    Console.WriteLine("Alla kurser har redan lärare!");
-                    Console.ReadKey();
-                    return;
-                }
-
-                Console.WriteLine("\nTillgängliga kurser utan lärare:");
-                foreach (var c in coursesWithoutTeachers)
-                    Console.WriteLine($"{c.CourseID} - {c.CourseName}");
-
-                Console.WriteLine("\nAnge kursens ID: ");
-                if (!int.TryParse(Console.ReadLine(), out int cId) || !coursesWithoutTeachers.Any(c => c.CourseID == cId))
-                {
-                    Console.WriteLine("Ogiltigt kurs-ID!");
-                    Console.ReadKey();
-                    return;
-                }
-
-                var course = data.DatabaseFirst.Courses.Find(cId);
-                course.FkTeacherID = tId;
-                data.DatabaseFirst.SaveChanges();
-
-                Console.WriteLine($"\nLäraren '{teachers.First(t => t.TeacherID == tId).TeacherName}' har kopplats till kursen '{course.CourseName}'");
-            }
-            else if (choiceConnect == "2")
-            {
-                var coursesWithoutTeachers = courses.Where(c => c.FkTeacherID == null).ToList();
-
-                if (!coursesWithoutTeachers.Any())
-                {
-                    Console.WriteLine("Alla kurser har redan lärare!");
-                    Console.ReadKey();
-                    return;
-                }
-
-                Console.WriteLine("\nTillgängliga kurser utan lärare:");
-                foreach (var c in coursesWithoutTeachers)
-                    Console.WriteLine($"{c.CourseID} - {c.CourseName}");
-
-                Console.WriteLine("\nAnge kursens ID: ");
-                if (!int.TryParse(Console.ReadLine(), out int cId) || !coursesWithoutTeachers.Any(c => c.CourseID == cId))
-                {
-                    Console.WriteLine("Ogiltigt kurs-ID!");
-                    Console.ReadKey();
-                    return;
-                }
-
-                var teachersWithoutCourse = teachers.Where(t => t.Courses == null || !t.Courses.Any()).ToList();
-
-                if (!teachersWithoutCourse.Any())
-                {
-                    Console.WriteLine("Alla lärare har redan kurser!");
-                    Console.ReadKey();
-                    return;
-                }
-
-                Console.WriteLine("\nTillgängliga lärare utan kurser:");
-                foreach (var t in teachersWithoutCourse)
-                    Console.WriteLine($"{t.TeacherID} - {t.TeacherName}");
-
-                Console.WriteLine("\nAnge lärarens ID: ");
-                if (!int.TryParse(Console.ReadLine(), out int tId) || !teachersWithoutCourse.Any(t => t.TeacherID == tId))
-                {
-                    Console.WriteLine("Ogiltigt lärar-ID!");
-                    Console.ReadKey();
-                    return;
-                }
-
-                var course = data.DatabaseFirst.Courses.Find(cId);
-                course.FkTeacherID = tId;
-                data.DatabaseFirst.SaveChanges();
-
-                Console.WriteLine($"\nKursen '{course.CourseName}' har kopplats till läraren '{teachers.First(t => t.TeacherID == tId).TeacherName}'");
+                Console.WriteLine($"\nLäraren '{teacherName}' har kopplats till kursen '{courseName}'");
             }
             else
             {
-                Console.WriteLine("Ogiltigt val!");
+                Console.WriteLine($"\nKursen '{courseName}' har kopplats till läraren '{teacherName}'");
             }
 
             Console.ReadKey();
